@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using System.Data.Entity;
 
 namespace WebApi.Models
 {
@@ -16,6 +17,8 @@ namespace WebApi.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -29,5 +32,7 @@ namespace WebApi.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<ApiKey> ApiKeys { get; set; }
     }
 }

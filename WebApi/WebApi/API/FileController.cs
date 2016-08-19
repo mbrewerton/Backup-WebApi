@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using WebApi.API.Extensions;
+using WebApi.Models;
 
 namespace WebApi.API
 {
     [RoutePrefix("api/File")]
-    public class FileController : ApiController
+    public class FileController : WebApiController
     {
         [HttpGet]
         [Route("Get")]
@@ -20,19 +23,32 @@ namespace WebApi.API
         }
 
         [HttpPost]
-        [Route("Post")]
+        [Route("PostAsync")]
+        /// <summary>
+        ///     Post a file to be saved to the backup filesystem.
+        /// </summary>
         public async Task<HttpResponseMessage> PostAsync()
         {
+            // Setup a stream provider at our folder location
             FileStreamProvider streamProvider = new FileStreamProvider("c:\\users\\Matt\\Desktop");
-            await Request.Content.ReadAsMultipartAsync(streamProvider);
-
-            foreach (var file in streamProvider.FileData)
+            try
             {
-                if (file != null)
-                {
-
-                }
+                // Attempt to read the file data to our stream
+                await Request.Content.ReadAsMultipartAsync(streamProvider);
             }
+            catch (Exception ex)
+            {
+                // An error occurred. Throw a generic error as we can't really see what happened.
+                throw new HttpResponseException(
+                    new HttpResponseMessage
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        Content =
+                        new StringContent("An error occurred when reading the file.")
+                    });
+            }
+
+            // File upload went A-OK.
             return Request.CreateResponse(HttpStatusCode.NotImplemented);
         }
     }

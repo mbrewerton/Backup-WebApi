@@ -171,6 +171,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\ApiKeyController.cs" />
+    <Compile Include="API\Extensions\WebApiController.cs" />
     <Compile Include="API\FileController.cs" />
     <Compile Include="API\FileStreamProvider.cs" />
     <Compile Include="API\TestController.cs" />
@@ -210,15 +212,29 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608181617403_Init.cs" />
+    <Compile Include="Migrations\201608181617403_Init.Designer.cs">
+      <DependentUpon>201608181617403_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608181652210_AddApiKeys.cs" />
+    <Compile Include="Migrations\201608181652210_AddApiKeys.Designer.cs">
+      <DependentUpon>201608181652210_AddApiKeys.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ApiKey.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Repositories\GenericRepository.cs" />
+    <Compile Include="Repositories\IObjectContext.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\Repositories.cs" />
+    <Compile Include="Repositories\UnitOfWork.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -294,6 +310,14 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201608181617403_Init.resx">
+      <DependentUpon>201608181617403_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608181652210_AddApiKeys.resx">
+      <DependentUpon>201608181652210_AddApiKeys.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

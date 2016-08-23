@@ -14,6 +14,7 @@ namespace WebApi.API.Extensions
 {
     public class WebApiController : ApiController
     {
+        public ApiKey ApiKey;
         public WebApiController()
         {
         }
@@ -39,8 +40,6 @@ namespace WebApi.API.Extensions
 
         public override Task<HttpResponseMessage> ExecuteAsync(HttpControllerContext controllerContext, CancellationToken cancellationToken)
         {
-            // Ensures that our Context is setup, in turn giving us our Request.
-            //base.Initialize(controllerContext);
             HttpResponseMessage response = new HttpResponseMessage();
             var headers = controllerContext.Request.Headers;
             IEnumerable<string> values;
@@ -53,10 +52,13 @@ namespace WebApi.API.Extensions
                     // Our key does not exist in the DB. It is invalid. return error.
                     if (key == null)
                     {
-                        //return CreateForbiddenResponse("The key provided is invalid.");
                         response.StatusCode = HttpStatusCode.Forbidden;
                         response.Content = new StringContent($"The key '{apiKeyFromHeader}' is invalid.");
                         throw new HttpResponseException(response);
+                    }
+                    else
+                    {
+                        ApiKey = key;
                     }
                 }
             }
@@ -65,9 +67,7 @@ namespace WebApi.API.Extensions
                 response.StatusCode = HttpStatusCode.BadRequest;
                 response.Content = new StringContent("You must supply an ApiKey in the 'X-ApiKey' header.");
                 throw new HttpResponseException(response);
-                //return CreateErrorResponse("You must supply an Api Key to the apiKey paramter.");
             }
-
             // All of our error checks pass. The ApiKey is supplied and correct. Continue Execution.
             return base.ExecuteAsync(controllerContext, cancellationToken);
         }

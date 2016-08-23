@@ -26,6 +26,7 @@ namespace WebApi.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            this.Configuration.LazyLoadingEnabled = true;
         }
         
         public static ApplicationDbContext Create()
@@ -34,5 +35,7 @@ namespace WebApi.Models
         }
 
         public DbSet<ApiKey> ApiKeys { get; set; }
+        public DbSet<Folder> Folders { get; set; }
+        public DbSet<UserFile> UserFiles { get; set; }
     }
 }

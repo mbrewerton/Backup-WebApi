@@ -12,7 +12,9 @@
     <add name="DefaultConnection" connectionString="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\aspnet-WebApi-20160818021322.mdf;Initial Catalog=aspnet-WebApi-20160818021322;Integrated Security=True"
       providerName="System.Data.SqlClient" />
   </connectionStrings>
-  <appSettings></appSettings>
+  <appSettings>
+    <add key="DefaultFolderPath" value="PATH_TO_DEFAULT_LOCATION"/>
+  </appSettings>
   <system.web>
     <authentication mode="None" />
     <compilation debug="true" targetFramework="4.5.2" />
